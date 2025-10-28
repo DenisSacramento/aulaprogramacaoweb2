@@ -6,11 +6,10 @@ function toggleMenu() {
   navMenu.classList.toggle("show");
 }
 
-// Fecha o menu quando o usuário clicar em um link (mobile)
+// Fecha o menu quando o usuário clicar fora (mobile)
 document.addEventListener("click", function (event) {
   const navMenu = document.getElementById("navMenu");
   const menuToggle = document.querySelector(".menu-toggle");
-
   if (
     navMenu.classList.contains("show") &&
     !menuToggle.contains(event.target) &&
@@ -26,7 +25,6 @@ document.addEventListener("click", function (event) {
 window.addEventListener("DOMContentLoaded", () => {
   const links = document.querySelectorAll("nav ul li a");
   const currentPage = window.location.pathname.split("/").pop();
-
   links.forEach(link => {
     if (link.getAttribute("href") === currentPage) {
       link.classList.add("active");
@@ -37,7 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 // ===============================
-// ROLAGEM SUAVE (opcional)
+// ROLAGEM SUAVE
 // ===============================
 const smoothLinks = document.querySelectorAll('a[href^="#"]');
 smoothLinks.forEach(link => {
@@ -54,27 +52,69 @@ smoothLinks.forEach(link => {
 });
 
 // ===============================
-// VALIDAÇÃO SIMPLES DO FORMULÁRIO (cadastro.html)
+// FORMULÁRIO DE CADASTRO
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector(".volunteer-form");
-  if (!form) return; // Se não estiver na página de cadastro, sai da função
+  const form = document.getElementById("volunteerForm");
+  if (!form) return;
 
+  const cpfInput = form.querySelector("#cpf");
+  const telInput = form.querySelector("#telefone");
+  const cepInput = form.querySelector("#cep");
+
+  // Função para aplicar máscara
+  function maskInput(input, maskType) {
+    input.addEventListener("input", () => {
+      let value = input.value.replace(/\D/g, ""); // remove tudo que não é número
+
+      if (maskType === "cpf") {
+        value = value
+          .replace(/(\d{3})(\d)/, "$1.$2")
+          .replace(/(\d{3})(\d)/, "$1.$2")
+          .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+      }
+
+      if (maskType === "telefone") {
+        value = value
+          .replace(/^(\d{2})(\d)/, "($1) $2")
+          .replace(/(\d{4,5})(\d{4})$/, "$1-$2");
+      }
+
+      if (maskType === "cep") {
+        value = value.replace(/^(\d{5})(\d)/, "$1-$2");
+      }
+
+      input.value = value;
+    });
+  }
+
+  // Aplicar máscaras
+  maskInput(cpfInput, "cpf");
+  maskInput(telInput, "telefone");
+  maskInput(cepInput, "cep");
+
+  // Validação simples e envio
   form.addEventListener("submit", (event) => {
-    event.preventDefault(); // Evita o envio automático
+    event.preventDefault();
 
-    const nome = form.querySelector('input[name="nome"]').value.trim();
-    const email = form.querySelector('input[name="email"]').value.trim();
-    const telefone = form.querySelector('input[name="telefone"]').value.trim();
-    const area = form.querySelector('select[name="area"]').value;
+    const nome = form.nome.value.trim();
+    const email = form.email.value.trim();
+    const telefone = form.telefone.value.trim();
+    const cpf = form.cpf.value.trim();
+    const cep = form.cep.value.trim();
 
-    if (!nome || !email || !telefone || !area) {
+    if (!nome || !email || !telefone || !cpf || !cep) {
       alert("Por favor, preencha todos os campos obrigatórios!");
       return;
     }
 
-    // Simulação de envio (você pode conectar com back-end depois)
-    alert(`Obrigado, ${nome}! Seu cadastro foi enviado com sucesso!`);
-    form.reset();
+    // Mostra mensagem de sucesso
+    const successMessage = document.getElementById("successMessage");
+    successMessage.classList.add("show");
+    successMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    // Limpa formulário após 2 segundos
+    setTimeout(() => form.reset(), 2000);
+    setTimeout(() => successMessage.classList.remove("show"), 3000);
   });
 });
