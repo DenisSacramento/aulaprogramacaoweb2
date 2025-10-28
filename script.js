@@ -1,57 +1,80 @@
-/*mobile*/
+// ===============================
+// MENU RESPONSIVO (MOBILE)
+// ===============================
 function toggleMenu() {
-    const menu = document.getElementById('navMenu');
-    menu.classList.toggle('active');
-
-}
-/*scroll leve*/
-
-function scrollActive(sectionId) {
-    const section = document.getElementById(sectionId);
-
-    if(!section) return;
-
-    const headerHeight = 70;  // Altura do cabeçalho fixa
-    const sectionPosition = section.offsetTop - headerHeight;
-    window.scrollTo({top: sectionPosition, behavior: 'smooth'});
-
-    cosnt menu = document.getElementById('navMenu');
-    menu.classList.remove('active');
+  const navMenu = document.getElementById("navMenu");
+  navMenu.classList.toggle("show");
 }
 
-/*cadastro*/
-function handleSubmit(event) {
-    event.preventDefault();
+// Fecha o menu quando o usuário clicar em um link (mobile)
+document.addEventListener("click", function (event) {
+  const navMenu = document.getElementById("navMenu");
+  const menuToggle = document.querySelector(".menu-toggle");
 
-    cosnt form = document.getElementById('volunteerForm');
+  if (
+    navMenu.classList.contains("show") &&
+    !menuToggle.contains(event.target) &&
+    !navMenu.contains(event.target)
+  ) {
+    navMenu.classList.remove("show");
+  }
+});
 
-    const formData = {
-        nome: form.nome.value,
-        email: form.email.value,
-        telefone: form.telefone.value,
-        idade: form.idade.value,
-        disponibilidade: form.disponibilidade.value,
-        areainteresse: form.areainteresse.value,
-        experiencia: form.experiencia.value,
-        motivacao: form.motivacao.value
-        dataCadastro: new Date().tolocaleString()
+// ===============================
+// DESTACAR LINK ATIVO NO MENU
+// ===============================
+window.addEventListener("DOMContentLoaded", () => {
+  const links = document.querySelectorAll("nav ul li a");
+  const currentPage = window.location.pathname.split("/").pop();
+
+  links.forEach(link => {
+    if (link.getAttribute("href") === currentPage) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+});
+
+// ===============================
+// ROLAGEM SUAVE (opcional)
+// ===============================
+const smoothLinks = document.querySelectorAll('a[href^="#"]');
+smoothLinks.forEach(link => {
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute("href"));
+    if (target) {
+      window.scrollTo({
+        top: target.offsetTop - 60,
+        behavior: "smooth",
+      });
+    }
+  });
+});
+
+// ===============================
+// VALIDAÇÃO SIMPLES DO FORMULÁRIO (cadastro.html)
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector(".volunteer-form");
+  if (!form) return; // Se não estiver na página de cadastro, sai da função
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault(); // Evita o envio automático
+
+    const nome = form.querySelector('input[name="nome"]').value.trim();
+    const email = form.querySelector('input[name="email"]').value.trim();
+    const telefone = form.querySelector('input[name="telefone"]').value.trim();
+    const area = form.querySelector('select[name="area"]').value;
+
+    if (!nome || !email || !telefone || !area) {
+      alert("Por favor, preencha todos os campos obrigatórios!");
+      return;
     }
 
-    let vountarios = JSON.parse(localStorage.getItem('voluntarios') || []);
-    voluntarios.push(formData);
-    localStorage.setItem('voluntarios', JSON.stringify(voluntarios));
-    cosnt sucessMessage = document.getElementById('successMessage');
-    sucessMessage. classList.add('show');
-    sucessMessage. scrollIntoView({behavior: 'smooth', block: 'center'});
-    setTimeout(() => form.reset(), 2000);
-    setTimeout(() => sucessMessage.classList.remove('show'), 3000);
-
-    function exibirVoluntarios() {
-        const voluntarios = JSON.parse(localStorage.getItem('voluntarios') || '[]');
-        const tabelaContainer = document.getElementById('tabelaContainer'); 
-
-        if (voluntarios.length === 0) {
-            tabelaContainer.innerHTML = '<p>Nenhum voluntário cadastrado.</p>';
-            return;
-        }
-}
+    // Simulação de envio (você pode conectar com back-end depois)
+    alert(`Obrigado, ${nome}! Seu cadastro foi enviado com sucesso!`);
+    form.reset();
+  });
+});

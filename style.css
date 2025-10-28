@@ -1,247 +1,319 @@
-/* style.css */
-
+/* =========================================
+   ESTILO GERAL DO SITE - VOLUNTÁRIOS
+   ========================================= */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", Arial, sans-serif;
 }
-
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: #333;
+  background-color: #a7dfff79;
+  color: #333;
+  line-height: 1.6;
 }
 
+/* LINKS */
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
-/* ==========================
-   Header e Navegação
-   ========================== */
+/* =========================================
+   CABEÇALHO E MENU
+   ========================================= */
 header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 1rem 0;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background-color: #0077cc;
+  color: #fff;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
-
 
 nav {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
-
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
 
-nav ul {
+#navMenu {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+#navMenu a {
+  color: #fff;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+#navMenu a:hover,
+#navMenu .active {
+  color: #ffdd57;
+}
+
+/* Responsivo - Menu em dispositivos pequenos */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  #navMenu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background-color: #0077cc;
+    width: 200px;
+    text-align: right;
+    padding: 1rem;
+    border-radius: 0 0 0 10px;
+  }
+
+  #navMenu.show {
     display: flex;
-    list-style: none;
-    gap: 2rem;
-}
+  }
 
-
-nav a {
-    color: white;
-    text-decoration: none;
-    transition: opacity 0.3s;
-    font-weight: 500;
-}
-
-
-nav a:hover,
-nav a.active {
-    opacity: 1;
-    font-weight: bold;
-}
-
-
-nav a {
-    opacity: 0.8;
-}
-
-
-/* ==========================
-   Hero Section - Index
-   ========================== */
-.hero {
-    background: linear-gradient(rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8)),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f0f0f0" width="1200" height="600"/></svg>');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-    margin-top: 70px;
-}
-
-
-.hero-page {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 8rem 2rem 4rem;
-    text-align: center;
-    color: white;
-    margin-top: 70px;
-}
-
-
-.hero-content, .signup-section {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    animation: fadeInUp 1s ease-out;
-}
-
-
-.hero h1,
-.hero-page h1 {
-    font-size: 3.5rem;
+  #navMenu li {
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
 }
 
-
-.hero p,
-.hero-page p {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
+/* =========================================
+   HERO SECTION (PÁGINA INICIAL)
+   ========================================= */
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+            url ('imagens/fundovoluntarios.jpg') center/cover no-repeat;
+  color: #097077;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
 }
 
-
-
-.cta-buttons {
-    display: flex;
-    flex-direction: row; /* lado a lado */
-    gap: 1.5rem; /* espaço entre os botões */
-    justify-content: center; /* centraliza horizontalmente */
-    align-items: center;
-    flex-wrap: wrap; /* quebra em telas pequenas */
-    margin-top: 2rem;
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
 }
 
-
-.btn-primary, .btn-secondary {
-    flex: 1 1 200px; /* largura mínima 200px, cresce se houver espaço */
-    max-width: 250px; /* não fique muito largo */
-    padding: 1rem 2.5rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border-radius: 50px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    position: relative;
-    overflow: hidden;
-    text-align: center;
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
 }
-
 
 .btn-primary {
-    background: #667eea;
-    color: white;
+  background-color: #ffdd57;
+  color: #333;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: background-color 0.3s;
 }
 
-
-.btn-secondary {
-    background: #764ba2;
-    color: white;
+.btn-primary:hover {
+  background-color: #ffcc00;
 }
 
-
-.btn-primary:hover, .btn-secondary:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+/* =========================================
+   SEÇÃO QUEM SOMOS
+   ========================================= */
+.about {
+  background-color: #fff;
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
-
-.btn-primary::after, .btn-secondary::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: rgba(255,255,255,0.15);
-    transform: rotate(45deg);
-    transition: all 0.5s ease;
+.about h2 {
+  color: #0077cc;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
 }
 
-
-.btn-primary:hover::after, .btn-secondary:hover::after {
-    top: -20%;
-    left: -20%;
+.about p {
+  max-width: 800px;
+  margin: 0 auto;
+  color: #555;
+  font-size: 1.1rem;
 }
 
-
-
-form fieldset {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+/* =========================================
+   SEÇÃO DE PROJETOS (projeto.html)
+   ========================================= */
+.projects {
+  background-color: #fff;
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
-
-form legend {
-    font-weight: bold;
-    padding: 0 0.5rem;
+.projects-header {
+  margin-bottom: 3rem;
 }
 
-
-.form-group {
-    margin-bottom: 1rem;
+.projects-header h1 {
+  font-size: 2.2rem;
+  color: #0077cc;
+  margin-bottom: 0.8rem;
 }
 
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+.projects-header p {
+  font-size: 1.1rem;
+  color: #555;
 }
 
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-
-.success-message {
-    display: none; 
-    margin-bottom: 1rem;
-    color: green;
-    font-weight: bold;
-    text-align: center;
+.project-card {
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
 
+.project-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.project-card h2 {
+  color: #0077cc;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-card p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* =========================================
+   FORMULÁRIO DE CADASTRO (cadastro.html)
+   ========================================= */
+.form-section {
+  background-color: #fff;
+  padding: 4rem 2rem;
+  max-width: 700px;
+  margin: 3rem auto;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-section h1 {
+  text-align: center;
+  color: #0077cc;
+  margin-bottom: 2rem;
+}
+
+.volunteer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.volunteer-form label {
+  font-weight: 500;
+  color: #333;
+}
+
+.volunteer-form input,
+.volunteer-form select,
+.volunteer-form textarea {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.volunteer-form button {
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.volunteer-form button:hover {
+  background-color: #005fa3;
+}
+
+/* =========================================
+   RODAPÉ
+   ========================================= */
 footer {
-    text-align: center;
-    padding: 2rem;
-    background: #f5f5f5;
-    margin-top: 3rem;
+  background-color: #0077cc;
+  color: #fff;
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
 }
 
+footer p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
 
+/* =========================================
+   RESPONSIVIDADE EXTRA
+   ========================================= */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
 
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .projects {
+    padding: 3rem 1rem;
+  }
+
+  .form-section {
+    margin: 2rem 1rem;
+    padding: 2rem 1rem;
+  }
+}
